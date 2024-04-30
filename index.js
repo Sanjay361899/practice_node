@@ -7,7 +7,7 @@ require('dotenv').config()
 app.use(express.urlencoded({extended:true}))
 connect();
 const authRoutes=require('./routes/authRoutes.js')
-app.use('/',authRoutes);
+app.use('/api',authRoutes);
 app.listen(process.env.port,()=>{
     console.log(`port is there on ${process.env.port}`)
 })
