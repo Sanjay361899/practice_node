@@ -68,7 +68,7 @@ const deletePermission=async(req,res)=>{
                 error:errors.array()
             })
         }
-        const deleteRecord=await permissionModel.deleteOne({_id:id})
+        const deleteRecord=await permissionModel.findByIdAndDelete(id)
         console.log(deleteRecord,"deleteRecord");
         return res.status(200).json({
             success:true,
@@ -81,4 +81,34 @@ const deletePermission=async(req,res)=>{
         })
     }
 }
-module.exports={setPermission,getPermission,deletePermission}
+const editPermission=async(req,res)=>{
+    try {
+        const errors=validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(200).send({
+                success:false,
+                msg:errors.message
+            })
+        }
+        const {id,permission_name}=req.body
+        const data=await permissionModel.findOne({_id:id});
+        if(data.permission_name==permission_name){
+            return res.status(200).json({
+                success:false,
+                msg:"No Updation in the field."
+            })
+        }
+        const updateData=await permissionModel.findByIdAndUpdate(id,{permission_name},{new:true,upsert:true})
+        return res.status(200).json({
+            success:false,
+            msg:"data is updated",
+            data:updateData
+        })
+    } catch (error) {
+        res.status(400).json({
+            sucess:false,
+            msg:error.message
+        })
+    }
+}
+module.exports={setPermission,getPermission,deletePermission,editPermission}
