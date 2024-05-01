@@ -82,4 +82,26 @@ const login=async(req,res)=>{
         })
     }
 }
-module.exports={register,login};
+const profile=async(req,res)=>{
+    try {
+       const auth_id= req.userId;
+       const profile_data=await user.findOne({_id:auth_id});
+       if(!profile_data){
+        return res.status(200).json({
+            success:false,
+            msg:"No profile with such id."
+        });
+       }
+       return res.status(200).json({
+        success:true,
+        msg:"data fetched of profile",
+        data:profile_data
+       })
+    } catch (error) {
+        return res.status(400).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+module.exports={register,login,profile};
