@@ -8,3 +8,7 @@ adminRouter.get('/getpermission',authMiddleware,getPermission)
 adminRouter.delete('/deletepermission',deletePermissionValidator,authMiddleware,deletePermission)
 adminRouter.delete('/updatepermission',permissionUpdateValidator,authMiddleware,editPermission)
 module.exports=adminRouter;
+
+
+
+

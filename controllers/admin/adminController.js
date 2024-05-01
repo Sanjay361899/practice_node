@@ -91,7 +91,7 @@ const editPermission=async(req,res)=>{
             })
         }
         const {id,permission_name}=req.body
-        const data=await permissionModel.findOne({_id:id});
+        const data=await permissionModel.findOne({permission_name});
         if(data.permission_name==permission_name){
             return res.status(200).json({
                 success:false,
