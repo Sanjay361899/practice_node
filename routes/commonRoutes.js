@@ -4,6 +4,6 @@ const { addCategory, getCategory,deleteCategory } = require("../controllers/cate
 const authMiddleware = require("../middleware/auth");
 const commonRouter=express();
 commonRouter.post('/addCategory',authMiddleware,categoryValidator,addCategory);
-commonRouter.post('/deleteCategory',authMiddleware,deleteCategoryValidator,deleteCategory);
-commonRouter.post('/addCategory',authMiddleware,getCategory);
+commonRouter.delete('/deleteCategory',authMiddleware,deleteCategoryValidator,deleteCategory);
+commonRouter.get('/getCategory',authMiddleware,getCategory);
 module.exports=commonRouter;
