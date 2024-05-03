@@ -23,7 +23,7 @@ const setPermission=async(req,res)=>{
             permission_name
         }
         if(req.body.isDefault){
-            obj.isDefault=req.body.isDefault;
+            obj.isDefault=parse.int(req.body.isDefault);
         }
         const permissionStore=new permissionModel(obj);
         const permissionResult=await permissionStore.save();
@@ -62,7 +62,7 @@ const getPermission=async(req,res)=>{
 const deletePermission=async(req,res)=>{
     try {
         const errors=validationResult(req.body)
-        if(!verify.isEmpty){
+        if(!errors.isEmpty){
             return res.status(200).json({
                 success:false,
                 error:errors.array()
@@ -91,7 +91,7 @@ const editPermission=async(req,res)=>{
             })
         }
         const {id,permission_name}=req.body
-        const data=await permissionModel.findOne({permission_name});
+        const data=await permissionModel.findOne({_id:{$ne:id}, permission_name});
         if(data.permission_name==permission_name){
             return res.status(200).json({
                 success:false,
@@ -111,4 +111,5 @@ const editPermission=async(req,res)=>{
         })
     }
 }
+//only admin can access this api this is authenticated apis with restriction of the user having admin access
 module.exports={setPermission,getPermission,deletePermission,editPermission}
